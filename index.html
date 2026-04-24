@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nitzan Kravitz — Portfolio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #1f2328;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      width: 100%;
+      padding: 24px 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      border: 2px solid #1f2328;
+      padding: 6px 10px;
+      border-radius: 3px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      box-shadow: 3px 3px 0 #1f2328;
+    }
+
+    .nav {
+      display: flex;
+      gap: 32px;
+      font-size: 15px;
+    }
+
+    .nav a {
+      position: relative;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: #1f2328;
+      transition: width 0.2s ease;
+    }
+
+    .nav a:hover::after {
+      width: 100%;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 26px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      align-items: center;
+      gap: 60px;
+      padding: 110px 11vw 80px;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 72px);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 18px;
+    }
+
+    .hero-kicker {
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      margin-bottom: 36px;
+    }
+
+    .hero-text p:last-of-type {
+      max-width: 400px;
+      font-size: 19px;
+      line-height: 1.7;
+      color: #40454d;
+      margin-bottom: 34px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .sketch-btn,
+    .filter-btn,
+    .modal-btn,
+    .cv-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 11px 20px;
+      border: 2px solid #1f2328;
+      background: #fff;
+      border-radius: 2px 8px 3px 7px;
+      color: #1f2328;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #1f2328;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .sketch-btn:hover,
+    .filter-btn:hover,
+    .modal-btn:hover,
+    .cv-btn:hover {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 #1f2328;
+      background: #f7f7f7;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      isolation: isolate;
+      perspective: 900px;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 68%;
+      height: 58%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(31,35,40,0.10), rgba(31,35,40,0.02) 52%, transparent 70%);
+      filter: blur(18px);
+      opacity: 0.45;
+      z-index: -1;
+      animation: softGlow 4.8s ease-in-out infinite;
+    }
+
+    .hero-visual img {
+      width: min(620px, 100%);
+      filter: grayscale(1);
+      transform: translate3d(0,0,0);
+      transition: transform 0.18s ease-out, filter 0.3s ease;
+      will-change: transform;
+    }
+
+    .hero-visual:hover img {
+      filter: grayscale(1) contrast(1.08);
+    }
+
+    .hero-cursor {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border: 2px solid #1f2328;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.65);
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      box-shadow: 3px 3px 0 #1f2328;
+      z-index: 3;
+    }
+
+    .hero-visual:hover .hero-cursor {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .hero-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border: 1.5px solid #1f2328;
+      border-radius: 50%;
+      opacity: 0.42;
+      animation: heroDotFloat 5s ease-in-out infinite;
+    }
+
+    .hero-dot.dota { left: 10%; top: 22%; }
+    .hero-dot.dotb { right: 14%; top: 18%; animation-delay: -1.4s; }
+    .hero-dot.dotc { left: 22%; bottom: 16%; animation-delay: -2.7s; }
+
+    .tiny-rocket {
+      position: absolute;
+      left: 12%;
+      bottom: 8%;
+      font-size: 34px;
+      animation: rocketFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes rocketFloat {
+      0%, 100% { transform: translateY(0) rotate(-8deg); }
+      50% { transform: translateY(-24px) rotate(7deg); }
+    }
+
+    @keyframes softGlow {
+      0%, 100% { transform: scale(0.96); opacity: 0.35; }
+      50% { transform: scale(1.08); opacity: 0.58; }
+    }
+
+    @keyframes heroDotFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .section {
+      padding: 95px 6vw;
+    }
+
+    .section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .section-title {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .section-intro {
+      color: #6d737d;
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    .filter-btn {
+      min-height: 38px;
+      padding: 7px 15px;
+      box-shadow: 3px 3px 0 #1f2328;
+      font-size: 14px;
+    }
+
+    .filter-btn.active {
+      background: #1f2328;
+      color: #fff;
+    }
+
+    .work-map {
+      position: relative;
+      min-height: 1260px;
+      overflow: visible;
+    }
+
+    .map-path {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: visible;
+    }
+
+    .path-line {
+      fill: none;
+      stroke: #1f2328;
+      stroke-width: 2;
+      stroke-dasharray: 9 14;
+      opacity: 0.25;
+      animation: dashMove 2.8s linear infinite;
+    }
+
+    .path-focus {
+      fill: none;
+      stroke: #1f2328;
+      stroke-width: 4;
+      stroke-dasharray: 11 11;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      animation: dashMove 0.75s linear infinite;
+    }
+
+    .work-map.is-hovering .path-focus {
+      opacity: 1;
+    }
+
+    @keyframes dashMove {
+      to { stroke-dashoffset: -46; }
+    }
+
+    .doodle {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.75;
+      font-size: 23px;
+      animation: doodleFloat 5s ease-in-out infinite;
+    }
+
+    .d1 { top: 80px; left: 24%; }
+    .d2 { top: 330px; right: 18%; animation-delay: -1s; }
+    .d3 { top: 720px; left: 8%; animation-delay: -2s; }
+    .d4 { bottom: 130px; right: 12%; animation-delay: -3s; }
+
+    @keyframes doodleFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(8deg); }
+    }
+
+    .orb {
+      position: absolute;
+      z-index: 2;
+      width: 235px;
+      height: 235px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #1f2328;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 7px 7px 0 #e9e9e9;
+      animation: orbFloat 6s ease-in-out infinite;
+      transition: box-shadow 0.25s ease, opacity 0.25s ease;
+    }
+
+    .orb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) brightness(0.92) contrast(0.9);
+      transform: scale(1.05);
+      transition: filter 0.35s ease, transform 0.35s ease;
+    }
+
+    .orb:hover img {
+      filter: grayscale(0) brightness(1) contrast(1);
+      transform: scale(1.15);
+    }
+
+    .orb:hover {
+      z-index: 6;
+      box-shadow: 11px 11px 0 #1f2328;
+    }
+
+    .orb.is-hidden {
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -18px; }
+    }
+
+    .orb:nth-of-type(1) { top: 40px; left: 2%; animation-delay: 0s; }
+    .orb:nth-of-type(2) { top: 0; left: 32%; animation-delay: -0.5s; }
+    .orb:nth-of-type(3) { top: 55px; left: 61%; animation-delay: -1s; }
+    .orb:nth-of-type(4) { top: 15px; right: 0; animation-delay: -1.5s; }
+    .orb:nth-of-type(5) { top: 330px; left: 13%; animation-delay: -2s; }
+    .orb:nth-of-type(6) { top: 365px; left: 43%; animation-delay: -2.5s; }
+    .orb:nth-of-type(7) { top: 325px; right: 12%; animation-delay: -3s; }
+    .orb:nth-of-type(8) { top: 650px; left: 0; animation-delay: -3.5s; }
+    .orb:nth-of-type(9) { top: 725px; left: 29%; animation-delay: -4s; }
+    .orb:nth-of-type(10) { top: 655px; left: 58%; animation-delay: -4.5s; }
+    .orb:nth-of-type(11) { top: 760px; right: 0; animation-delay: -5s; }
+    .orb:nth-of-type(12) { top: 985px; left: 43%; animation-delay: -5.5s; }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      background: rgba(255,255,255,0.74);
+      backdrop-filter: blur(13px);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(1120px, 96vw);
+      min-height: 650px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      background: #fff;
+      border: 3px solid #1f2328;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 15px 15px 0 #1f2328;
+      animation: modalOpen 0.26s ease;
+    }
+
+    @keyframes modalOpen {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-gallery {
+      position: relative;
+      min-height: 650px;
+      border-right: 3px solid #1f2328;
+      background: #f6f6f6;
+    }
+
+    .modal-gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-arrow,
+    .close-modal {
+      position: absolute;
+      border: 2px solid #1f2328;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #1f2328;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .gallery-arrow:hover,
+    .close-modal:hover {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 #1f2328;
+    }
+
+    .gallery-arrow {
+      top: 50%;
+      width: 48px;
+      height: 48px;
+      transform: translateY(-50%);
+      font-size: 28px;
+      z-index: 2;
+    }
+
+    .gallery-arrow.prev { left: 18px; }
+    .gallery-arrow.next { right: 18px; }
+
+    .close-modal {
+      right: 22px;
+      top: 22px;
+      width: 46px;
+      height: 46px;
+      z-index: 3;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .modal-info {
+      padding: 52px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .modal-meta {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #777f8a;
+    }
+
+    .modal-title {
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+    }
+
+    .modal-desc {
+      color: #424a55;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .about {
+      padding-top: 20px;
+    }
+
+    .about-content {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 55px;
+      align-items: start;
+    }
+
+    .about-text h2 {
+      font-size: clamp(38px, 5vw, 62px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .about-text p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #434b55;
+      margin-bottom: 18px;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .skill {
+      border: 1.5px solid #1f2328;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+
+    .cv-zone {
+      text-align: center;
+      padding: 80px 6vw 110px;
+    }
+
+    footer {
+      padding: 28px 6vw;
+      display: flex;
+      justify-content: space-between;
+      color: #6d737d;
+      font-size: 14px;
+      border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 110px 7vw 70px;
+      }
+
+      .hero-visual img {
+        width: min(520px, 100%);
+      }
+
+      .section-header,
+      .about-content,
+      .modal-card {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-gallery {
+        min-height: 430px;
+        border-right: 0;
+        border-bottom: 3px solid #1f2328;
+      }
+
+      .work-map {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .map-path,
+      .doodle {
+        display: none;
+      }
+
+      .orb,
+      .orb:nth-of-type(n) {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        height: auto;
+        top: auto;
+        left: auto;
+        right: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .site-header {
+        padding: 18px 5vw;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      .hero {
+        padding-top: 96px;
+      }
+
+      .buttons,
+      .modal-actions,
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .work-map {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .modal {
+        padding: 14px;
+      }
+
+      .modal-card {
+        min-height: auto;
+        max-height: 92vh;
+        overflow-y: auto;
+        box-shadow: 8px 8px 0 #1f2328;
+      }
+
+      .modal-gallery {
+        min-height: 300px;
+      }
+
+      .modal-info {
+        padding: 34px 24px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="logo" href="#top">N.K</a>
+    <nav class="nav">
+      <a href="#top">Home</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="assets/cv.pdf" download>CV</a>
+      <a href="mailto:nitzan200@yahoo.com">Contact</a>
+    </nav>
+    <div class="menu-icon">☰</div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>NITZAN KRAVITZ</h1>
+        <p class="hero-kicker">UI/UX · Game · Motion</p>
+        <p>I design interactive systems, worlds, and visual experiences.</p>
+        <div class="buttons">
+          <a class="sketch-btn" href="#work">View Work →</a>
+          <a class="sketch-btn" href="#about">About Me →</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" id="heroVisual">
+       <img src="assets/hero_illustration.jpg" alt="Designer working in front of a screen illustration">
+        <span class="hero-cursor" id="heroCursor"></span>
+        <span class="hero-dot dota"></span>
+        <span class="hero-dot dotb"></span>
+        <span class="hero-dot dotc"></span>
+        <div class="tiny-rocket">⌁</div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2 class="section-title">Selected Work</h2>
+          <p class="section-intro">A selection of game design, UX/UI, motion and interactive projects. Hover to unlock color. Click to explore.</p>
+        </div>
+
+        <div class="filters" aria-label="Project filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="game">Games</button>
+          <button class="filter-btn" data-filter="ux">UX/UI</button>
+          <button class="filter-btn" data-filter="motion">Motion</button>
+        </div>
+
+        <div class="work-map" id="workMap">
+          <svg class="map-path" viewBox="0 0 1280 1260" preserveAspectRatio="none" aria-hidden="true">
+            <path class="path-line" d="M110 155 C 260 40, 410 120, 530 125 S 780 170, 895 155 S 1060 20, 1190 125" />
+            <path class="path-line" d="M150 455 C 285 360, 465 550, 580 480 S 820 300, 970 480 S 1120 710, 1125 845" />
+            <path class="path-line" d="M120 770 C 300 640, 440 860, 565 805 S 760 650, 885 775 S 1060 925, 1125 845" />
+            <path class="path-line" d="M365 990 C 490 1160, 650 1180, 760 1050 S 980 865, 1125 845" />
+            <path class="path-focus" id="pathFocus" d="" />
+          </svg>
+
+          <div class="doodle d1">✦</div>
+          <div class="doodle d2">◌</div>
+          <div class="doodle d3">✺</div>
+          <div class="doodle d4">⌁</div>
+
+          <button class="orb" data-index="0" data-category="game"><img src="assets/01.jpg" alt="Lampi Road"></button>
+          <button class="orb" data-index="1" data-category="game"><img src="assets/02.jpg" alt="Sleepy Boy"></button>
+          <button class="orb" data-index="2" data-category="game"><img src="assets/03.jpg" alt="Koko Kaki"></button>
+          <button class="orb" data-index="3" data-category="game"><img src="assets/04.jpg" alt="Flower Defence"></button>
+          <button class="orb" data-index="4" data-category="game"><img src="assets/05.jpg" alt="Napila"></button>
+          <button class="orb" data-index="5" data-category="game"><img src="assets/06.jpg" alt="Double Touchdown"></button>
+          <button class="orb" data-index="6" data-category="game"><img src="assets/07.jpg" alt="Space Invaders AR"></button>
+          <button class="orb" data-index="7" data-category="ux"><img src="assets/08.jpg" alt="Government Systems"></button>
+          <button class="orb" data-index="8" data-category="game"><img src="assets/09.jpg" alt="Safe Surfing"></button>
+          <button class="orb" data-index="9" data-category="motion"><img src="assets/010.jpg" alt="Motion Design"></button>
+          <button class="orb" data-index="10" data-category="ux"><img src="assets/011.jpg" alt="Portfolio UI"></button>
+          <button class="orb" data-index="11" data-category="ux"><img src="assets/012.jpg" alt="Visual Experiments"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>About Me</h2>
+          <p>I am a multidisciplinary interaction designer with over 20 years of experience in digital experiences, interfaces and games.</p>
+          <p>My work combines playful thinking, visual clarity, complex systems, technology and a strong sensitivity to movement, interaction and user experience.</p>
+        </div>
+        <div>
+          <div class="skills-list">
+            <span class="skill">UX/UI</span>
+            <span class="skill">Game Design</span>
+            <span class="skill">Unity</span>
+            <span class="skill">Motion</span>
+            <span class="skill">Illustration</span>
+            <span class="skill">Complex Systems</span>
+            <span class="skill">Interactive Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cv-zone">
+      <a class="cv-btn" href="assets/cv.pdf" download>Download CV ↓</a>
+    </section>
+  </main>
+
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="close-modal" id="closeModal" aria-label="Close project">×</button>
+      <div class="modal-gallery">
+        <button class="gallery-arrow prev" id="prevImage" aria-label="Previous image">‹</button>
+        <img id="modalImage" src="" alt="">
+        <button class="gallery-arrow next" id="nextImage" aria-label="Next image">›</button>
+      </div>
+      <div class="modal-info">
+        <div class="modal-meta" id="modalMeta"></div>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-actions">
+          <a class="modal-btn" id="projectLink" href="#" target="_blank">Open Project →</a>
+          <button class="modal-btn" id="nextProject">Next Project →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Nitzan Kravitz</span>
+    <span>UI/UX · Game · Motion</span>
+  </footer>
+
+  <script>
+    const heroVisual = document.getElementById('heroVisual');
+    const heroImg = heroVisual.querySelector('img');
+    const heroCursor = document.getElementById('heroCursor');
+
+    heroVisual.addEventListener('mousemove', (event) => {
+      const rect = heroVisual.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const rotateY = ((x / rect.width) - 0.5) * 7;
+      const rotateX = ((y / rect.height) - 0.5) * -7;
+      heroImg.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translate3d(${(x - rect.width / 2) * 0.015}px, ${(y - rect.height / 2) * 0.015}px, 0)`;
+      heroCursor.style.left = `${x}px`;
+      heroCursor.style.top = `${y}px`;
+    });
+
+    heroVisual.addEventListener('mouseleave', () => {
+      heroImg.style.transform = '';
+    });
+
+    const projects = [
+      {
+        title: 'Lampi Road',
+        meta: 'Arcade Game',
+        desc: 'An arcade game experience focused on timing, movement, readability and immediate player feedback.',
+        link: 'https://swiex.itch.io/',
+        images: ['assets/01.jpg', 'assets/01-2.jpg', 'assets/01-3.jpg']
+      },
+      {
+        title: 'Sleepy Boy',
+        meta: 'Mobile Game / Auto Runner',
+        desc: 'A mobile auto-runner prototype with gesture-based controls, jumping, rolling and shooting interaction.',
+        link: 'https://swiex.itch.io/',
+        images: ['assets/02.jpg', 'assets/02-2.jpg', 'assets/02-3.jpg']
+      },
+      {
+        title: 'Koko Kaki',
+        meta: 'Character Game World',
+        desc: 'A playful character-driven game world with bold visual identity, humor and casual-game appeal.',
+        link: 'https://swiex.itch.io/',
+        images: ['assets/03.jpg', 'assets/03-2.jpg', 'assets/03-3.jpg']
+      },
+      {
+        title: 'Flower Defence',
+        meta: 'Tower Defense Game',
+        desc: 'A colorful tower defense concept combining playful characters, accessible strategy and strong visual language.',
+        link: 'https://swiex.itch.io/',
+        images: ['assets/04.jpg', 'assets/04-2.jpg', 'assets/04-3.jpg']
+      },
+      {
+        title: 'Napila',
+        meta: 'Puzzle Game',
+        desc: 'A soft and minimal puzzle game concept focused on simple rules, charm and approachable interaction.',
+        link: 'https://swiex.itch.io/',
+        images: ['assets/05.jpg', 'assets/05-2.jpg', 'assets/05-3.jpg']
+      },
+      {
+        title: 'Double Touchdown',
+        meta: 'Two Player Sports Game',
+        desc: 'A fast local multiplayer sports game built around competition, collection, timing and pressure.',
+        link: 'https://swiex.itch.io/',
+        images: ['assets/06.jpg', 'assets/06-2.jpg', 'assets/06-3.jpg']
+      },
+      {
+        title: 'Space Invaders AR',
+        meta: 'AR Game Concept',
+        desc: 'A mixed reality adaptation of Space Invaders designed around physical space, scanning and movement.',
+        link: '#',
+        images: ['assets/07.jpg', 'assets/07-2.jpg', 'assets/07-3.jpg']
+      },
+      {
+        title: 'Government Systems',
+        meta: 'UX/UI Design',
+        desc: 'Complex public-sector systems designed around hierarchy, clarity, service flows and user-centered processes.',
+        link: 'https://nitzankravitz.wixsite.com/mysite',
+        images: ['assets/08.jpg', 'assets/08-2.jpg', 'assets/08-3.jpg']
+      },
+      {
+        title: 'Safe Surfing',
+        meta: 'Educational Game / Unity',
+        desc: 'A digital safety game for young users combining playful visual language, learning goals and interaction.',
+        link: '#',
+        images: ['assets/09.jpg', 'assets/09-2.jpg', 'assets/09-3.jpg']
+      },
+      {
+        title: 'Motion Design',
+        meta: 'Video / Animation',
+        desc: 'Explainer videos, motion graphics and visual storytelling for digital products and organizations.',
+        link: 'https://nitzankravitz.wixsite.com/mysite',
+        images: ['assets/010.jpg', 'assets/010-2.jpg', 'assets/010-3.jpg']
+      },
+      {
+        title: 'Portfolio UI',
+        meta: 'Web / Interaction Design',
+        desc: 'A personal portfolio direction combining minimal layout, hand-drawn illustration and playful interaction.',
+        link: '#',
+        images: ['assets/011.jpg', 'assets/011-2.jpg', 'assets/011-3.jpg']
+      },
+      {
+        title: 'Visual Experiments',
+        meta: 'Illustration / UI Experiments',
+        desc: 'Visual explorations, sketches and interface experiments connecting illustration, typography and interaction.',
+        link: 'https://nitzankravitz.wixsite.com/mysite',
+        images: ['assets/012.jpg', 'assets/012-2.jpg', 'assets/012-3.jpg']
+      }
+    ];
+
+    const modal = document.getElementById('projectModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDesc = document.getElementById('modalDesc');
+    const projectLink = document.getElementById('projectLink');
+    const closeModal = document.getElementById('closeModal');
+    const prevImage = document.getElementById('prevImage');
+    const nextImage = document.getElementById('nextImage');
+    const nextProject = document.getElementById('nextProject');
+    const orbs = document.querySelectorAll('.orb');
+    const workMap = document.getElementById('workMap');
+    const pathFocus = document.getElementById('pathFocus');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    let currentProject = 0;
+    let currentImage = 0;
+
+    function safeImage(src) {
+      modalImage.src = src;
+      modalImage.onerror = () => {
+        modalImage.src = projects[currentProject].images[0];
+      };
+    }
+
+    function renderProject() {
+      const p = projects[currentProject];
+      modalTitle.textContent = p.title;
+      modalMeta.textContent = p.meta;
+      modalDesc.textContent = p.desc;
+      projectLink.href = p.link;
+      safeImage(p.images[currentImage]);
+      modalImage.alt = p.title;
+    }
+
+    function openProject(index) {
+      currentProject = index;
+      currentImage = 0;
+      renderProject();
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProject() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function moveImage(direction) {
+      const imageList = projects[currentProject].images;
+      currentImage = (currentImage + direction + imageList.length) % imageList.length;
+      renderProject();
+    }
+
+    function updateFocusPath(orb) {
+      const mapRect = workMap.getBoundingClientRect();
+      const orbRect = orb.getBoundingClientRect();
+      const x = ((orbRect.left + orbRect.width / 2 - mapRect.left) / mapRect.width) * 1280;
+      const y = ((orbRect.top + orbRect.height / 2 - mapRect.top) / mapRect.height) * 1260;
+      const centerX = 640;
+      const centerY = 620;
+      const curveX = (x + centerX) / 2;
+      const curveY = Math.min(y, centerY) - 140;
+      pathFocus.setAttribute('d', `M ${x} ${y} Q ${curveX} ${curveY} ${centerX} ${centerY}`);
+    }
+
+    orbs.forEach((orb) => {
+      const index = Number(orb.dataset.index);
+
+      orb.addEventListener('click', () => openProject(index));
+
+      orb.addEventListener('mousemove', (event) => {
+        if (window.innerWidth < 980) return;
+        const rect = orb.getBoundingClientRect();
+        const x = event.clientX - rect.left - rect.width / 2;
+        const y = event.clientY - rect.top - rect.height / 2;
+        orb.style.transform = `translate(${x * 0.12}px, ${y * 0.12}px) scale(1.08)`;
+      });
+
+      orb.addEventListener('mouseenter', () => {
+        workMap.classList.add('is-hovering');
+        updateFocusPath(orb);
+      });
+
+      orb.addEventListener('mouseleave', () => {
+        orb.style.transform = '';
+        workMap.classList.remove('is-hovering');
+        pathFocus.setAttribute('d', '');
+      });
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        orbs.forEach((orb) => {
+          const match = filter === 'all' || orb.dataset.category === filter;
+          orb.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+
+    closeModal.addEventListener('click', closeProject);
+    prevImage.addEventListener('click', () => moveImage(-1));
+    nextImage.addEventListener('click', () => moveImage(1));
+    nextProject.addEventListener('click', () => openProject((currentProject + 1) % projects.length));
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeProject();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeProject();
+      if (!modal.classList.contains('open')) return;
+      if (event.key === 'ArrowRight') moveImage(1);
+      if (event.key === 'ArrowLeft') moveImage(-1);
+    });
+  </script>
+</body>
+</html>
