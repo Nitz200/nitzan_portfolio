@@ -112,12 +112,18 @@
       margin-bottom: 36px;
     }
 
-    .hero-text p:last-of-type {
-      max-width: 400px;
+    .hero-text p:not(.hero-kicker) {
+      max-width: 520px;
       font-size: 19px;
       line-height: 1.7;
       color: #40454d;
-      margin-bottom: 34px;
+      margin-bottom: 18px;
+    }
+
+    .hero-deep-text {
+      font-size: 17px !important;
+      color: #626a74 !important;
+      margin-bottom: 34px !important;
     }
 
     .buttons {
@@ -409,9 +415,38 @@
     .d3 { top: 720px; left: 8%; animation-delay: -2s; }
     .d4 { bottom: 130px; right: 12%; animation-delay: -3s; }
 
+    .work-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border: 1.5px solid #1f2328;
+      border-radius: 50%;
+      opacity: 0.34;
+      z-index: 0;
+      animation: workDotFloat 6s ease-in-out infinite;
+      transition: opacity 0.25s ease, border-color 0.25s ease;
+      will-change: transform;
+    }
+
+    .work-map.is-orb-hovering .work-dot {
+      opacity: 0.55;
+    }
+
+    .work-dot.wd1 { top: 140px; left: 18%; }
+    .work-dot.wd2 { top: 410px; left: 73%; animation-delay: -1.2s; }
+    .work-dot.wd3 { top: 690px; left: 48%; animation-delay: -2.4s; }
+    .work-dot.wd4 { top: 960px; left: 12%; animation-delay: -3.1s; }
+    .work-dot.wd5 { top: 1240px; left: 78%; animation-delay: -4s; }
+    .work-dot.wd6 { top: 1510px; left: 36%; animation-delay: -2.8s; }
+
     @keyframes doodleFloat {
       0%, 100% { transform: translateY(0) rotate(0deg); }
       50% { transform: translateY(-12px) rotate(8deg); }
+    }
+
+    @keyframes workDotFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.15); }
     }
 
     .orb {
@@ -633,6 +668,89 @@
       margin-bottom: 18px;
     }
 
+    .timeline {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      border-left: 2px dashed #1f2328;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border: 2px solid #1f2328;
+      border-radius: 50%;
+    }
+
+    .timeline-year {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .positioning-card {
+      border: 2px solid #1f2328;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 8px 8px 0 #f0f0f0;
+      margin-bottom: 24px;
+      background: #fff;
+    }
+
+    .positioning-label {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #737b86;
+      margin-bottom: 12px;
+    }
+
+    .positioning-card h3 {
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .positioning-card p {
+      color: #434b55;
+      line-height: 1.7;
+    }
+
+    .impact-list {
+      margin-top: 10px;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #434b55;
+      font-size: 16px;
+    }
+
+    .impact-list li {
+      line-height: 1.6;
+    }
+
     .skills-list {
       display: flex;
       flex-wrap: wrap;
@@ -781,7 +899,8 @@
       <div class="hero-text">
         <h1>NITZAN KRAVITZ</h1>
         <p class="hero-kicker">UI/UX · Game · Motion</p>
-        <p>I design interactive systems, worlds, and visual experiences.</p>
+        <p>I’m a UX/UI designer and game creator focused on building complex systems, digital interfaces, and interactive experiences.</p>
+        <p class="hero-deep-text">I combine product thinking with game design principles to create experiences that people don’t just use — they feel, understand and remember.</p>
         <div class="buttons">
           <a class="sketch-btn" href="#work">View Work →</a>
           <a class="sketch-btn" href="#about">About Me →</a>
@@ -796,7 +915,7 @@
         <span class="hero-dot dotc"></span>
         <span class="hero-scanline"></span>
         <span class="hero-xp">+10 UX</span>
-        <span class="hero-hint">Move Cursor</span>
+        
         <div class="tiny-rocket">⌁</div>
       </div>
     </section>
@@ -805,7 +924,7 @@
       <div class="section-inner">
         <div class="section-header">
           <h2 class="section-title">Selected Work</h2>
-          <p class="section-intro">A selection of game design, UX/UI, motion and interactive projects. Hover to unlock color. Click to explore.</p>
+          <p class="section-intro">A selection of projects from games, UX/UI and motion.</p>
         </div>
 
         <div class="filters" aria-label="Project filters">
@@ -830,6 +949,13 @@
           <div class="doodle d3">✺</div>
           <div class="doodle d4">⌁</div>
 
+          <span class="work-dot wd1"></span>
+          <span class="work-dot wd2"></span>
+          <span class="work-dot wd3"></span>
+          <span class="work-dot wd4"></span>
+          <span class="work-dot wd5"></span>
+          <span class="work-dot wd6"></span>
+
           <button class="orb" data-index="0" data-category="game"><img class="line-img" src="assets/line01.jpg" alt="Lampi Road line illustration"><img class="color-img" src="assets/01.jpg" alt="Lampi Road color artwork"></button>
           <button class="orb" data-index="1" data-category="game"><img class="line-img" src="assets/line02.jpg" alt="Sleepy Boy line illustration"><img class="color-img" src="assets/02.jpg" alt="Sleepy Boy color artwork"></button>
           <button class="orb" data-index="2" data-category="game"><img class="line-img" src="assets/line03.jpg" alt="Koko Kaki line illustration"><img class="color-img" src="assets/03.jpg" alt="Koko Kaki color artwork"></button>
@@ -839,13 +965,13 @@
           <button class="orb" data-index="6" data-category="game"><img class="line-img" src="assets/line07.jpg" alt="Space Invaders AR line illustration"><img class="color-img" src="assets/07.jpg" alt="Space Invaders AR color artwork"></button>
           <button class="orb" data-index="7" data-category="ux"><img class="line-img" src="assets/line08.jpg" alt="Government Systems line illustration"><img class="color-img" src="assets/08.jpg" alt="Government Systems color artwork"></button>
           <button class="orb" data-index="8" data-category="game"><img class="line-img" src="assets/line09.jpg" alt="Safe Surfing line illustration"><img class="color-img" src="assets/09.jpg" alt="Safe Surfing color artwork"></button>
-          <button class="orb" data-index="9" data-category="motion"><img class="line-img" src="assets/line010.jpg" alt="Motion Design line illustration"><img class="color-img" src="assets/010.jpg" alt="Motion Design color artwork"></button>
-          <button class="orb" data-index="10" data-category="ux"><img class="line-img" src="assets/line011.jpg" alt="Portfolio UI line illustration"><img class="color-img" src="assets/011.jpg" alt="Portfolio UI color artwork"></button>
-          <button class="orb" data-index="11" data-category="ux"><img class="line-img" src="assets/line012.jpg" alt="Visual Experiments line illustration"><img class="color-img" src="assets/012.jpg" alt="Visual Experiments color artwork"></button>
-          <button class="orb" data-index="12" data-category="ux"><img class="line-img" src="assets/line013.jpg" alt="Dashboard UI line illustration"><img class="color-img" src="assets/013.jpg" alt="Dashboard UI color artwork"></button>
-          <button class="orb" data-index="13" data-category="motion"><img class="line-img" src="assets/line014.jpg" alt="Motion Reel line illustration"><img class="color-img" src="assets/014.jpg" alt="Motion Reel color artwork"></button>
-          <button class="orb" data-index="14" data-category="motion"><img class="line-img" src="assets/line015.jpg" alt="Alcohol prevention line illustration"><img class="color-img" src="assets/015.jpg" alt="Alcohol prevention color artwork"></button>
-          <button class="orb" data-index="15" data-category="motion"><img class="line-img" src="assets/line016.jpg" alt="Security in rural areas line illustration"><img class="color-img" src="assets/016.jpg" alt="Security in rural areas color artwork"></button>
+          <button class="orb" data-index="9" data-category="motion"><img class="line-img" src="assets/line10.jpg" alt="Motion Design line illustration"><img class="color-img" src="assets/010.jpg" alt="Motion Design color artwork"></button>
+          <button class="orb" data-index="10" data-category="ux"><img class="line-img" src="assets/line11.jpg" alt="Portfolio UI line illustration"><img class="color-img" src="assets/011.jpg" alt="Portfolio UI color artwork"></button>
+          <button class="orb" data-index="11" data-category="ux"><img class="line-img" src="assets/line12.jpg" alt="Visual Experiments line illustration"><img class="color-img" src="assets/012.jpg" alt="Visual Experiments color artwork"></button>
+          <button class="orb" data-index="12" data-category="ux"><img class="line-img" src="assets/line13.jpg" alt="Dashboard UI line illustration"><img class="color-img" src="assets/013.jpg" alt="Dashboard UI color artwork"></button>
+          <button class="orb" data-index="13" data-category="motion"><img class="line-img" src="assets/line14.jpg" alt="Motion Reel line illustration"><img class="color-img" src="assets/014.jpg" alt="Motion Reel color artwork"></button>
+          <button class="orb" data-index="14" data-category="motion"><img class="line-img" src="assets/line15.jpg" alt="Alcohol prevention line illustration"><img class="color-img" src="assets/015.jpg" alt="Alcohol prevention color artwork"></button>
+          <button class="orb" data-index="15" data-category="motion"><img class="line-img" src="assets/line16.jpg" alt="Security in rural areas line illustration"><img class="color-img" src="assets/016.jpg" alt="Security in rural areas color artwork"></button>
         </div>
       </div>
     </section>
@@ -854,10 +980,50 @@
       <div class="about-content">
         <div class="about-text">
           <h2>About Me</h2>
-          <p>I am a multidisciplinary interaction designer with over 20 years of experience in digital experiences, interfaces and games.</p>
-          <p>My work combines playful thinking, visual clarity, complex systems, technology and a strong sensitivity to movement, interaction and user experience.</p>
+                    <p>I’m a UX/UI designer and game creator with 20+ years of experience across government systems, real-time platforms, software interfaces, motion and interactive products.</p>
+          <p>My strength is connecting product thinking with game design principles: feedback loops, motivation, clarity, flow and meaningful user action.</p>
+
+          <div class="impact">
+            <p><strong>What I bring:</strong></p>
+            <ul class="impact-list">
+              <li>Designing large-scale systems with clear hierarchy, usability and visual logic</li>
+              <li>End-to-end thinking — from concept and UX flows to UI, interaction and implementation</li>
+              <li>Game-thinking approach to engagement, learning, feedback and behavior</li>
+              <li>Hands-on collaboration with developers, stakeholders and multidisciplinary teams</li>
+            </ul>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="timeline-year">2012 — 2026</span>
+              <p>Senior UX/UI Designer — government systems, complex platforms and digital services</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2008 — 2010</span>
+              <p>Interaction Designer / Design Lead — real-time trading systems and product interfaces at Finotec</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2006 — 2008</span>
+              <p>Interactive Designer — websites, games, interactive tools and digital products</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2000 — 2003</span>
+              <p>Graphic Designer — RSD Marketing (NYC), working with global brands on advertising, packaging and early digital experiences</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">Ongoing</span>
+              <p>Basketball Coach & Founder — game-based learning, movement, motivation and feedback systems</p>
+            </div>
+          </div>
+
+          <div style="margin-top:24px;">
+            <a class="sketch-btn" href="assets/cv.pdf" download>Download CV →</a>
+          </div>
         </div>
+
         <div>
+          
+
           <div class="skills-list">
             <span class="skill">UX/UI</span>
             <span class="skill">Game Design</span>
@@ -871,9 +1037,7 @@
       </div>
     </section>
 
-    <section class="cv-zone">
-      <a class="cv-btn" href="assets/cv.pdf" download>Download CV ↓</a>
-    </section>
+    
   </main>
 
   <div class="modal" id="projectModal" aria-hidden="true">
@@ -1070,6 +1234,55 @@
     const workMap = document.getElementById('workMap');
     const pathFocus = document.getElementById('pathFocus');
     const filterButtons = document.querySelectorAll('.filter-btn');
+    const workDots = document.querySelectorAll('.work-dot');
+
+    let activeOrb = null;
+
+    function moveDots(event) {
+      const rect = workMap.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      let orbCenter = null;
+      if (activeOrb) {
+        const orbRect = activeOrb.getBoundingClientRect();
+        orbCenter = {
+          x: orbRect.left + orbRect.width / 2,
+          y: orbRect.top + orbRect.height / 2
+        };
+      }
+
+      workDots.forEach((dot, i) => {
+        const strength = (i % 3 + 1) * 6;
+        let moveX = x * strength;
+        let moveY = y * strength;
+
+        if (orbCenter) {
+          const dotRect = dot.getBoundingClientRect();
+          const dotCenterX = dotRect.left + dotRect.width / 2;
+          const dotCenterY = dotRect.top + dotRect.height / 2;
+          const pullX = orbCenter.x - dotCenterX;
+          const pullY = orbCenter.y - dotCenterY;
+          const distance = Math.hypot(pullX, pullY);
+          const pullStrength = Math.max(0, 1 - distance / 520) * 34;
+
+          if (distance > 0) {
+            moveX += (pullX / distance) * pullStrength;
+            moveY += (pullY / distance) * pullStrength;
+          }
+        }
+
+        dot.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
+    }
+
+    workMap.addEventListener('mousemove', moveDots);
+
+    workMap.addEventListener('mouseleave', () => {
+      activeOrb = null;
+      workMap.classList.remove('is-orb-hovering');
+      workDots.forEach(dot => dot.style.transform = '');
+    });
 
     let currentProject = 0;
     let currentImage = 0;
@@ -1150,14 +1363,17 @@
         orb.style.transform = `translate(${x * 0.12}px, ${y * 0.12}px) scale(1.08)`;
       });
 
-      orb.addEventListener('mouseenter', () => {
-        workMap.classList.add('is-hovering');
+      orb.addEventListener('mouseenter', (event) => {
+        activeOrb = orb;
+        workMap.classList.add('is-hovering', 'is-orb-hovering');
         updateFocusPath(orb);
+        moveDots(event);
       });
 
       orb.addEventListener('mouseleave', () => {
+        activeOrb = null;
         orb.style.transform = '';
-        workMap.classList.remove('is-hovering');
+        workMap.classList.remove('is-hovering', 'is-orb-hovering');
         pathFocus.setAttribute('d', '');
       });
     });
