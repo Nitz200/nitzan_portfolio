@@ -229,6 +229,55 @@
       animation: rocketFloat 4s ease-in-out infinite;
     }
 
+    .hero-hint {
+      position: absolute;
+      right: 10%;
+      bottom: 6%;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4e5661;
+      border: 1.5px dashed #1f2328;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.72);
+      opacity: 0.72;
+      animation: hintPulse 2.6s ease-in-out infinite;
+    }
+
+    .hero-scanline {
+      position: absolute;
+      left: 14%;
+      top: 24%;
+      width: 58%;
+      height: 2px;
+      background: #1f2328;
+      opacity: 0;
+      transform: translateY(0);
+      pointer-events: none;
+    }
+
+    .hero-visual:hover .hero-scanline {
+      opacity: 0.35;
+      animation: scanMove 1.6s ease-in-out infinite;
+    }
+
+    .hero-xp {
+      position: absolute;
+      left: 18%;
+      top: 9%;
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .hero-visual:hover .hero-xp {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @keyframes rocketFloat {
       0%, 100% { transform: translateY(0) rotate(-8deg); }
       50% { transform: translateY(-24px) rotate(7deg); }
@@ -242,6 +291,17 @@
     @keyframes heroDotFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-14px); }
+    }
+
+    @keyframes hintPulse {
+      0%, 100% { transform: scale(1); opacity: 0.58; }
+      50% { transform: scale(1.04); opacity: 0.95; }
+    }
+
+    @keyframes scanMove {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(180px); }
+      100% { transform: translateY(0); }
     }
 
     .section {
@@ -295,7 +355,7 @@
 
     .work-map {
       position: relative;
-      min-height: 1260px;
+      min-height: 1700px;
       overflow: visible;
     }
 
@@ -370,16 +430,26 @@
     }
 
     .orb img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(1) brightness(0.92) contrast(0.9);
       transform: scale(1.05);
-      transition: filter 0.35s ease, transform 0.35s ease;
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
-    .orb:hover img {
-      filter: grayscale(0) brightness(1) contrast(1);
+    .orb .color-img {
+      opacity: 0;
+    }
+
+    .orb:hover .line-img {
+      opacity: 0;
+      transform: scale(1.12);
+    }
+
+    .orb:hover .color-img {
+      opacity: 1;
       transform: scale(1.15);
     }
 
@@ -410,6 +480,10 @@
     .orb:nth-of-type(10) { top: 655px; left: 58%; animation-delay: -4.5s; }
     .orb:nth-of-type(11) { top: 760px; right: 0; animation-delay: -5s; }
     .orb:nth-of-type(12) { top: 985px; left: 43%; animation-delay: -5.5s; }
+    .orb:nth-of-type(13) { top: 1160px; left: 6%; animation-delay: -6s; }
+    .orb:nth-of-type(14) { top: 1250px; left: 36%; animation-delay: -6.5s; }
+    .orb:nth-of-type(15) { top: 1175px; right: 4%; animation-delay: -7s; }
+    .orb:nth-of-type(16) { top: 1430px; left: 55%; animation-delay: -7.5s; }
 
     .modal {
       position: fixed;
@@ -715,11 +789,14 @@
       </div>
 
       <div class="hero-visual" id="heroVisual">
-       <img src="assets/hero_illustration.jpg" alt="Designer working in front of a screen illustration">
+        <img src="assets/hero_illustration.jpg" alt="Designer working in front of a screen illustration">
         <span class="hero-cursor" id="heroCursor"></span>
         <span class="hero-dot dota"></span>
         <span class="hero-dot dotb"></span>
         <span class="hero-dot dotc"></span>
+        <span class="hero-scanline"></span>
+        <span class="hero-xp">+10 UX</span>
+        <span class="hero-hint">Move Cursor</span>
         <div class="tiny-rocket">⌁</div>
       </div>
     </section>
@@ -739,11 +816,12 @@
         </div>
 
         <div class="work-map" id="workMap">
-          <svg class="map-path" viewBox="0 0 1280 1260" preserveAspectRatio="none" aria-hidden="true">
+          <svg class="map-path" viewBox="0 0 1280 1700" preserveAspectRatio="none" aria-hidden="true">
             <path class="path-line" d="M110 155 C 260 40, 410 120, 530 125 S 780 170, 895 155 S 1060 20, 1190 125" />
             <path class="path-line" d="M150 455 C 285 360, 465 550, 580 480 S 820 300, 970 480 S 1120 710, 1125 845" />
             <path class="path-line" d="M120 770 C 300 640, 440 860, 565 805 S 760 650, 885 775 S 1060 925, 1125 845" />
             <path class="path-line" d="M365 990 C 490 1160, 650 1180, 760 1050 S 980 865, 1125 845" />
+            <path class="path-line" d="M150 1240 C 300 1340, 520 1280, 690 1360 S 970 1510, 1160 1370" />
             <path class="path-focus" id="pathFocus" d="" />
           </svg>
 
@@ -752,18 +830,22 @@
           <div class="doodle d3">✺</div>
           <div class="doodle d4">⌁</div>
 
-          <button class="orb" data-index="0" data-category="game"><img src="assets/01.jpg" alt="Lampi Road"></button>
-          <button class="orb" data-index="1" data-category="game"><img src="assets/02.jpg" alt="Sleepy Boy"></button>
-          <button class="orb" data-index="2" data-category="game"><img src="assets/03.jpg" alt="Koko Kaki"></button>
-          <button class="orb" data-index="3" data-category="game"><img src="assets/04.jpg" alt="Flower Defence"></button>
-          <button class="orb" data-index="4" data-category="game"><img src="assets/05.jpg" alt="Napila"></button>
-          <button class="orb" data-index="5" data-category="game"><img src="assets/06.jpg" alt="Double Touchdown"></button>
-          <button class="orb" data-index="6" data-category="game"><img src="assets/07.jpg" alt="Space Invaders AR"></button>
-          <button class="orb" data-index="7" data-category="ux"><img src="assets/08.jpg" alt="Government Systems"></button>
-          <button class="orb" data-index="8" data-category="game"><img src="assets/09.jpg" alt="Safe Surfing"></button>
-          <button class="orb" data-index="9" data-category="motion"><img src="assets/010.jpg" alt="Motion Design"></button>
-          <button class="orb" data-index="10" data-category="ux"><img src="assets/011.jpg" alt="Portfolio UI"></button>
-          <button class="orb" data-index="11" data-category="ux"><img src="assets/012.jpg" alt="Visual Experiments"></button>
+          <button class="orb" data-index="0" data-category="game"><img class="line-img" src="assets/line01.jpg" alt="Lampi Road line illustration"><img class="color-img" src="assets/01.jpg" alt="Lampi Road color artwork"></button>
+          <button class="orb" data-index="1" data-category="game"><img class="line-img" src="assets/line02.jpg" alt="Sleepy Boy line illustration"><img class="color-img" src="assets/02.jpg" alt="Sleepy Boy color artwork"></button>
+          <button class="orb" data-index="2" data-category="game"><img class="line-img" src="assets/line03.jpg" alt="Koko Kaki line illustration"><img class="color-img" src="assets/03.jpg" alt="Koko Kaki color artwork"></button>
+          <button class="orb" data-index="3" data-category="game"><img class="line-img" src="assets/line04.jpg" alt="Flower Defence line illustration"><img class="color-img" src="assets/04.jpg" alt="Flower Defence color artwork"></button>
+          <button class="orb" data-index="4" data-category="game"><img class="line-img" src="assets/line05.jpg" alt="Napila line illustration"><img class="color-img" src="assets/05.jpg" alt="Napila color artwork"></button>
+          <button class="orb" data-index="5" data-category="game"><img class="line-img" src="assets/line06.jpg" alt="Double Touchdown line illustration"><img class="color-img" src="assets/06.jpg" alt="Double Touchdown color artwork"></button>
+          <button class="orb" data-index="6" data-category="game"><img class="line-img" src="assets/line07.jpg" alt="Space Invaders AR line illustration"><img class="color-img" src="assets/07.jpg" alt="Space Invaders AR color artwork"></button>
+          <button class="orb" data-index="7" data-category="ux"><img class="line-img" src="assets/line08.jpg" alt="Government Systems line illustration"><img class="color-img" src="assets/08.jpg" alt="Government Systems color artwork"></button>
+          <button class="orb" data-index="8" data-category="game"><img class="line-img" src="assets/line09.jpg" alt="Safe Surfing line illustration"><img class="color-img" src="assets/09.jpg" alt="Safe Surfing color artwork"></button>
+          <button class="orb" data-index="9" data-category="motion"><img class="line-img" src="assets/line010.jpg" alt="Motion Design line illustration"><img class="color-img" src="assets/010.jpg" alt="Motion Design color artwork"></button>
+          <button class="orb" data-index="10" data-category="ux"><img class="line-img" src="assets/line011.jpg" alt="Portfolio UI line illustration"><img class="color-img" src="assets/011.jpg" alt="Portfolio UI color artwork"></button>
+          <button class="orb" data-index="11" data-category="ux"><img class="line-img" src="assets/line012.jpg" alt="Visual Experiments line illustration"><img class="color-img" src="assets/012.jpg" alt="Visual Experiments color artwork"></button>
+          <button class="orb" data-index="12" data-category="ux"><img class="line-img" src="assets/line013.jpg" alt="Dashboard UI line illustration"><img class="color-img" src="assets/013.jpg" alt="Dashboard UI color artwork"></button>
+          <button class="orb" data-index="13" data-category="motion"><img class="line-img" src="assets/line014.jpg" alt="Motion Reel line illustration"><img class="color-img" src="assets/014.jpg" alt="Motion Reel color artwork"></button>
+          <button class="orb" data-index="14" data-category="motion"><img class="line-img" src="assets/line015.jpg" alt="Alcohol prevention line illustration"><img class="color-img" src="assets/015.jpg" alt="Alcohol prevention color artwork"></button>
+          <button class="orb" data-index="15" data-category="motion"><img class="line-img" src="assets/line016.jpg" alt="Security in rural areas line illustration"><img class="color-img" src="assets/016.jpg" alt="Security in rural areas color artwork"></button>
         </div>
       </div>
     </section>
@@ -800,6 +882,7 @@
       <div class="modal-gallery">
         <button class="gallery-arrow prev" id="prevImage" aria-label="Previous image">‹</button>
         <img id="modalImage" src="" alt="">
+        <video id="modalVideo" controls playsinline style="display:none; width:100%; height:100%; object-fit:cover;"></video>
         <button class="gallery-arrow next" id="nextImage" aria-label="Next image">›</button>
       </div>
       <div class="modal-info">
@@ -808,6 +891,7 @@
         <p class="modal-desc" id="modalDesc"></p>
         <div class="modal-actions">
           <a class="modal-btn" id="projectLink" href="#" target="_blank">Open Project →</a>
+          <button class="modal-btn" id="videoBtn">Project Video ▶</button>
           <button class="modal-btn" id="nextProject">Next Project →</button>
         </div>
       </div>
@@ -842,87 +926,131 @@
     const projects = [
       {
         title: 'Lampi Road',
-        meta: 'Arcade Game',
+        meta: 'Game',
         desc: 'An arcade game experience focused on timing, movement, readability and immediate player feedback.',
-        link: 'https://swiex.itch.io/',
+        link: 'https://swiex.itch.io/lampi-road',
+        video: 'assets/movie01.mp4',
         images: ['assets/01.jpg', 'assets/01-2.jpg', 'assets/01-3.jpg']
       },
       {
         title: 'Sleepy Boy',
-        meta: 'Mobile Game / Auto Runner',
+        meta: 'Game / Mobile Auto Runner',
         desc: 'A mobile auto-runner prototype with gesture-based controls, jumping, rolling and shooting interaction.',
-        link: 'https://swiex.itch.io/',
+        link: 'assets/movie02.mp4',
+        video: 'assets/movie02.mp4',
         images: ['assets/02.jpg', 'assets/02-2.jpg', 'assets/02-3.jpg']
       },
       {
         title: 'Koko Kaki',
-        meta: 'Character Game World',
+        meta: 'Game',
         desc: 'A playful character-driven game world with bold visual identity, humor and casual-game appeal.',
-        link: 'https://swiex.itch.io/',
+        link: 'https://swiex.itch.io/koko-kaki',
+        video: 'assets/movie03.mp4',
         images: ['assets/03.jpg', 'assets/03-2.jpg', 'assets/03-3.jpg']
       },
       {
         title: 'Flower Defence',
-        meta: 'Tower Defense Game',
+        meta: 'Game / Tower Defense',
         desc: 'A colorful tower defense concept combining playful characters, accessible strategy and strong visual language.',
-        link: 'https://swiex.itch.io/',
+        link: 'https://swiex.itch.io/flower',
+        video: 'assets/movie04.mp4',
         images: ['assets/04.jpg', 'assets/04-2.jpg', 'assets/04-3.jpg']
       },
       {
         title: 'Napila',
-        meta: 'Puzzle Game',
+        meta: 'Game / Puzzle',
         desc: 'A soft and minimal puzzle game concept focused on simple rules, charm and approachable interaction.',
-        link: 'https://swiex.itch.io/',
+        link: 'https://swiex.itch.io/napila',
+        video: 'assets/movie05.mp4',
         images: ['assets/05.jpg', 'assets/05-2.jpg', 'assets/05-3.jpg']
       },
       {
         title: 'Double Touchdown',
-        meta: 'Two Player Sports Game',
+        meta: 'Game / Two Player Sports Game',
         desc: 'A fast local multiplayer sports game built around competition, collection, timing and pressure.',
-        link: 'https://swiex.itch.io/',
+        link: 'https://swiex.itch.io/dubletachdown',
+        video: 'assets/movie06.mp4',
         images: ['assets/06.jpg', 'assets/06-2.jpg', 'assets/06-3.jpg']
       },
       {
-        title: 'Space Invaders AR',
-        meta: 'AR Game Concept',
-        desc: 'A mixed reality adaptation of Space Invaders designed around physical space, scanning and movement.',
-        link: '#',
+        title: 'Supervision Application',
+        meta: 'Software Interface / UX/UI',
+        desc: 'A software interface project focused on clarity, status visibility, user flows and efficient supervision workflows.',
+        link: 'assets/movie07.mp4',
+        video: 'assets/movie07.mp4',
         images: ['assets/07.jpg', 'assets/07-2.jpg', 'assets/07-3.jpg']
       },
       {
-        title: 'Government Systems',
-        meta: 'UX/UI Design',
-        desc: 'Complex public-sector systems designed around hierarchy, clarity, service flows and user-centered processes.',
-        link: 'https://nitzankravitz.wixsite.com/mysite',
+        title: 'Sky Trader',
+        meta: 'Software Interface / UX/UI',
+        desc: 'An interactive trading-system interface and visual identity project for a complex real-time product environment.',
+        link: 'assets/movie08.mp4',
+        video: 'assets/movie08.mp4',
         images: ['assets/08.jpg', 'assets/08-2.jpg', 'assets/08-3.jpg']
       },
       {
         title: 'Safe Surfing',
-        meta: 'Educational Game / Unity',
+        meta: 'Game / Educational Game',
         desc: 'A digital safety game for young users combining playful visual language, learning goals and interaction.',
-        link: '#',
+        link: 'https://lomda.mops.gov.il/105/',
+        video: 'assets/movie09.mp4',
         images: ['assets/09.jpg', 'assets/09-2.jpg', 'assets/09-3.jpg']
       },
       {
-        title: 'Motion Design',
-        meta: 'Video / Animation',
-        desc: 'Explainer videos, motion graphics and visual storytelling for digital products and organizations.',
-        link: 'https://nitzankravitz.wixsite.com/mysite',
+        title: 'Smart Phone Stand Up Show',
+        meta: 'Motion',
+        desc: 'A motion project built around playful storytelling, timing, rhythm and visual communication.',
+        link: 'assets/movie010.mp4',
+        video: 'assets/movie010.mp4',
         images: ['assets/010.jpg', 'assets/010-2.jpg', 'assets/010-3.jpg']
       },
       {
-        title: 'Portfolio UI',
-        meta: 'Web / Interaction Design',
-        desc: 'A personal portfolio direction combining minimal layout, hand-drawn illustration and playful interaction.',
-        link: '#',
+        title: 'Matchmaker Or Heart Breaker',
+        meta: 'Game / Visual Novel',
+        desc: 'A story-driven game about choices, relationships and playful branching outcomes.',
+        link: 'https://swiex.itch.io/matchmaker-or-heart-breaker',
+        video: 'assets/movie011.mp4',
         images: ['assets/011.jpg', 'assets/011-2.jpg', 'assets/011-3.jpg']
       },
       {
-        title: 'Visual Experiments',
-        meta: 'Illustration / UI Experiments',
-        desc: 'Visual explorations, sketches and interface experiments connecting illustration, typography and interaction.',
-        link: 'https://nitzankravitz.wixsite.com/mysite',
+        title: 'Dashboard NPZ System',
+        meta: 'Software Interface / UX/UI',
+        desc: 'A dashboard interface project focused on hierarchy, data visibility and decision-making clarity.',
+        link: 'assets/movie012.mp4',
+        video: 'assets/movie012.mp4',
         images: ['assets/012.jpg', 'assets/012-2.jpg', 'assets/012-3.jpg']
+      },
+      {
+        title: 'Office Portal',
+        meta: 'Software Interface / UX/UI',
+        desc: 'A portal interface designed around digital service flows, information hierarchy and internal organizational use.',
+        link: 'assets/movie013.mp4',
+        video: 'assets/movie013.mp4',
+        images: ['assets/013.jpg', 'assets/013-2.jpg', 'assets/013-3.jpg']
+      },
+      {
+        title: 'Allot',
+        meta: 'Motion',
+        desc: 'A motion-design project combining composition, visual storytelling and animated transitions.',
+        link: 'assets/movie014.mp4',
+        video: 'assets/movie014.mp4',
+        images: ['assets/014.jpg', 'assets/014-2.jpg', 'assets/014-3.jpg']
+      },
+      {
+        title: 'Alcohol Prevention',
+        meta: 'Motion',
+        desc: 'A motion project for prevention messaging, using clear communication, rhythm and visual emphasis.',
+        link: 'assets/movie015.mp4',
+        video: 'assets/movie015.mp4',
+        images: ['assets/015.jpg', 'assets/015-2.jpg', 'assets/015-3.jpg']
+      },
+      {
+        title: 'Security in Rural Areas',
+        meta: 'Motion',
+        desc: 'A motion project communicating rural security topics through visual storytelling and structured messaging.',
+        link: 'assets/movie016.mp4',
+        video: 'assets/movie016.mp4',
+        images: ['assets/016.jpg', 'assets/016-2.jpg', 'assets/016-3.jpg']
       }
     ];
 
@@ -932,6 +1060,8 @@
     const modalMeta = document.getElementById('modalMeta');
     const modalDesc = document.getElementById('modalDesc');
     const projectLink = document.getElementById('projectLink');
+    const videoBtn = document.getElementById('videoBtn');
+    const modalVideo = document.getElementById('modalVideo');
     const closeModal = document.getElementById('closeModal');
     const prevImage = document.getElementById('prevImage');
     const nextImage = document.getElementById('nextImage');
@@ -945,10 +1075,22 @@
     let currentImage = 0;
 
     function safeImage(src) {
+      modalVideo.pause();
+      modalVideo.style.display = 'none';
+      modalImage.style.display = 'block';
       modalImage.src = src;
       modalImage.onerror = () => {
         modalImage.src = projects[currentProject].images[0];
       };
+    }
+
+    function showProjectVideo() {
+      const p = projects[currentProject];
+      modalImage.style.display = 'none';
+      modalVideo.style.display = 'block';
+      modalVideo.src = p.video;
+      modalVideo.load();
+      modalVideo.play().catch(() => {});
     }
 
     function renderProject() {
@@ -957,6 +1099,7 @@
       modalMeta.textContent = p.meta;
       modalDesc.textContent = p.desc;
       projectLink.href = p.link;
+      projectLink.textContent = p.link.includes('movie/') ? 'Open Video →' : 'Open Project →';
       safeImage(p.images[currentImage]);
       modalImage.alt = p.title;
     }
@@ -986,7 +1129,7 @@
       const mapRect = workMap.getBoundingClientRect();
       const orbRect = orb.getBoundingClientRect();
       const x = ((orbRect.left + orbRect.width / 2 - mapRect.left) / mapRect.width) * 1280;
-      const y = ((orbRect.top + orbRect.height / 2 - mapRect.top) / mapRect.height) * 1260;
+      const y = ((orbRect.top + orbRect.height / 2 - mapRect.top) / mapRect.height) * 1700;
       const centerX = 640;
       const centerY = 620;
       const curveX = (x + centerX) / 2;
@@ -1032,6 +1175,7 @@
       });
     });
 
+    videoBtn.addEventListener('click', showProjectVideo);
     closeModal.addEventListener('click', closeProject);
     prevImage.addEventListener('click', () => moveImage(-1));
     nextImage.addEventListener('click', () => moveImage(1));
